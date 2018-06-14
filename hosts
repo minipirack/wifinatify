@@ -1,0 +1,7 @@
+[master]
+r1-p1.local
+
+[slave]
+r1-p2.local
+r1-p3.local
+

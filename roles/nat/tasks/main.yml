@@ -24,8 +24,23 @@
 - name: Enable IP forwarding
   lineinfile:
     path: /etc/sysctl.conf
-    regexp: '^net\.ipv4\.ip_forward$'
+    regexp: '^#net\.ipv4\.ip_forward$'
     line: 'net.ipv4.ip_forward=1'
+
+- name: Verify rc.local exists
+  stat:
+    path: /etc/rc.local
+  register: rc_local_check
+  ignore_errors: yes
+
+- name: Copy new rc.local if rc.local does not exist
+  copy:
+    src: rc.local
+    dest: /etc/rc.local
+    owner: root
+    group: root
+    mode: 0755
+  when: rc_local_check.stat.exists == False
 
 - name: Set routing tables
   blockinfile:

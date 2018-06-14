@@ -1,7 +1,7 @@
 ---
 
 - name: Set up the MiniPiRack to cut the cable
-  hosts: rpi
+  hosts: master
   become: yes
 
   roles:
@@ -9,3 +9,10 @@
     - wifi
     - nat
 
+- name: Reboot to finish settings
+  hosts:
+    - master
+    - slave
+
+  roles:
+    - final

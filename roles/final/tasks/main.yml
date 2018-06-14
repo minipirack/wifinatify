@@ -1,0 +1,11 @@
+---
+
+- name: Confirm unplug ether cable
+  pause: prompt='Get ready to unplug the ethernet cable from the MiniPiRack. Once ansible has completed running, remove the cable while the MiniPiRack reboots.\n\nPress return to continue. Press Ctrl+c and then "a" to abort'
+
+- name: Shutdown
+  shell: "( /bin/sleep 2 && /sbin/shutdown -h now )"
+  async: 1
+  poll: 0
+  ignore_errors: yes
+  tags: shutdown
