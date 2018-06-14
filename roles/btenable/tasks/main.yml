@@ -1,0 +1,37 @@
+---
+
+- name: Insert new conf for bluetooth service
+  blockinfile:
+    path: /lib/systemd/system/bluetooth.service
+    insertafter: '^Exec.*toothd$'
+    block: |
+        ExecStartPost=/usr/bin/sdptool add SP
+        ExecStartPost=/bin/hciconfig hci0 piscan
+
+- name: Replace old bluetoothd driver line
+  lineinfile:
+    path: /lib/systemd/system/bluetooth.service
+    regexp: '^Exec.*toothd$'
+    line: 'ExecStart=/usr/lib/bluetooth/bluetoothd -C'
+
+- name: Add rfcomm service file
+  template:
+    src: rfcomm.service.j2
+    dest: /etc/systemd/system/rfcomm.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Force systemd to reread configs
+  systemd:
+    daemon_reload: yes
+  ignore_errors: yes
+
+- name: Enable service rfcom and ensure it is not masked
+  systemd:
+    name: rfcomm
+    enabled: yes
+    masked: no
+
+- name: Create the Bluetooth discovery name
+  command: hciconfig hci0 name '{{ bluetooth.rp1_name }}'

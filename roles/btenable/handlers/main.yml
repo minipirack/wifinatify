@@ -1,0 +1,6 @@
+---
+
+- name: restart rfcomm
+  service:
+    name: rfcomm
+    state: restarted

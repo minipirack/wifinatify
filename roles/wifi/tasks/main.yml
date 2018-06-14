@@ -1,0 +1,15 @@
+---
+
+- name: Add wan wifi network file
+  template:
+    src: wlan0.j2
+    dest: /etc/network/interfaces.d/wlan0
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Delete cloud config file
+  file:
+    path: /etc/network/interfaces.d/50-cloud-init.cfg
+    state: absent
+  ignore_errors: yes

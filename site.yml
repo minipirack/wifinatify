@@ -1,0 +1,11 @@
+---
+
+- name: Set up the MiniPiRack to cut the cable
+  hosts: rpi
+  become: yes
+
+  roles:
+    - btenable
+    - wifi
+    - nat
+

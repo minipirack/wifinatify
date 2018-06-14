@@ -1,0 +1,2 @@
+ansible_user: pirate
+ansible_ssh_pass: hypriot
