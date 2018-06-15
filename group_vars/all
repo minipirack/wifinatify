@@ -1,7 +1,11 @@
+# default user and password for Hypriot linux
+ansible_user: pirate
+ansible_ssh_pass: hypriot
+
 bluetooth:
-  rp1_name: rpi1
+  rp1_name: "{{ btname | default('rpi1') }}"
 
 wifi:
-  ssid: WifiSSIDNameHere
-  psk: WifiSSIDPasswordHere
+  ssid: '{{ ssid }}'
+  psk: '{{ wifipassword }}'
 
