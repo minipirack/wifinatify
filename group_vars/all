@@ -1,0 +1,7 @@
+bluetooth:
+  rp1_name: rpi1
+
+wifi:
+  ssid: WifiSSIDNameHere
+  psk: WifiSSIDPasswordHere
+
