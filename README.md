@@ -1,4 +1,4 @@
-﻿# wifinatify
+﻿# ![MiniPiRack](./images/MiniPiRack.jpg) WiFiNATify
 
 ## Convert the MiniPiRack to use WiFi for WAN and a NAT internally
 
@@ -17,9 +17,9 @@ The internal network (r1-p2, r1-p3) can be access via r1-p1 as a jump server.
 2. Run the ansible script to configure the MiniPiRack
 3. Disconnect the ethernet cable.  You won't need it anymore.
 4. Using Bluetooth, pair your laptop to the MiniPiRack master (r1-p1) ([Bluetooth pairing
-](./images/BluetoothPairing.png)
+](./images/BluetoothPairing.png))
 5. Connect using 'screen' to r1-p1 (See directions below.)
-6. Edit /etc/networks/interfaces.d/wlan0 to set the network name (wpa-ssid) and password (wpa-psk)
+6. Edit /etc/networks/interfaces.d/wlan0 to set the wifi network name (wpa-ssid) and password (wpa-psk)
 7. Run 'sudo systemctl restart networking'
 8. Run 'ifconfig' to get the new ip address for the wlan0 interface.
 9. Or, depending on your network configuration, you might be able to 'ssh pirate@r1-p1.local'
@@ -57,4 +57,4 @@ For the device listed above (r1-p1):
 
 Credit goes to [Patrick Hundal](https://hacks.mozilla.org/author/phundalmozilla-com/) for the HOWTO at https://hacks.mozilla.org/2017/02/headless-raspberry-pi-configuration-over-bluetooth/ for showing how to expose a terminal via Bluetooth.
 
-
+[MiniPiRack.com](https://www.minipirack.com) - a scalable, desktop cluster
