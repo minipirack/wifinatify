@@ -12,24 +12,37 @@ See [network diagram.
 
 The internal network (r1-p2, r1-p3) can be access via r1-p1 as a jump server.
 
-# HOWTO
-1. Connect via wired connection so the ansible script can be run
-2. Run the ansible script to configure the MiniPiRack
-3. Disconnect the ethernet cable.  You won't need it anymore.
-4. Using Bluetooth, pair your laptop to the MiniPiRack master (r1-p1) ([Bluetooth pairing
-](./images/BluetoothPairing.png))
-5. Connect using 'screen' to r1-p1 (See directions below.)
-6. Edit /etc/networks/interfaces.d/wlan0 to set the wifi network name (wpa-ssid) and password (wpa-psk)
-7. Run 'sudo systemctl restart networking'
-8. Run 'ifconfig' to get the new ip address for the wlan0 interface.
-9. Or, depending on your network configuration, you might be able to 'ssh pirate@r1-p1.local'
-10. Enjoy your newly Wifi-connected, NAT-ed MiniPiRack!
+# HOWTO Setup the Wifi and NAT
+1. Connect via wired connection so the ansible script can be run.
+2. Run the ansible script to configure the MiniPiRack.
+3. Disconnect the ethernet cable while the rack reboots.  You won't need it anymore.
+4. Depending on your network setup, you might be able to connect using:
+
+       ssh pirate@r1-p1.local
+5. If r1-p1.local does not resolve to an IP address, use the Bluetooth pairing to attach to the master r1-p1 (see directions below.)
+6. Get the IP address of the r1-p1 wlan0 network adapter using 'ifconfig'
+7. ssh to r1-p1 by:
+
+       ssh pirate@<ip address of r1-p1 wlan0>
+9. Enjoy your newly Wifi-connected, NAT-ed MiniPiRack!
 
 ## To run the ansible playbook
 
-ansible-playbook -i hosts site.yml
+    ansible-playbook -i hosts site.yml --extra-vars "ssid=<wifi network name> wifipassword=<wifi password name> btname=<paired Bluetooth name>"
+
+ssid - the SSID of the WiFi network to connect to
+wifipassword - the password of the WiFi network
+The 'btname' variable is optional.  Without it, the btname will default to 'rpi1'.
 
 ## To access a terminal via BlueTooth using 'screen'
+
+The ansible script will expose the master (r1-p1) via Bluetooth so that you can connect to it via iTerm2 or other terminal program.
+
+### HOWTO Connect via Bluetooth
+1. Using Bluetooth, pair your laptop to the MiniPiRack master (r1-p1) ([Bluetooth pairing
+](./images/BluetoothPairing.png))
+2. Connect using 'screen' to r1-p1 (See directions below.)
+
 
 ### Find the Bluetooth device
 *This will not work until you have paired your laptop with r1-p1 (Step #4 in the HOWTO).*
@@ -44,7 +57,7 @@ You should see something like the following
 
 The name of the connected device is 'r1-p1'
 
-### Connect using 'screen'
+### Connect via Bluetooth using 'screen'
 The command to start a tty session is:
 screen /dev/cu.<name of connected device goes here\>-SerialPort 115200
 
@@ -55,6 +68,7 @@ For the device listed above (r1-p1):
 
 
 
-Credit goes to [Patrick Hundal](https://hacks.mozilla.org/author/phundalmozilla-com/) for the HOWTO at https://hacks.mozilla.org/2017/02/headless-raspberry-pi-configuration-over-bluetooth/ for showing how to expose a terminal via Bluetooth.
+Credit for showing how to expose a terminal via Bluetooth goes to [Patrick Hundal](https://hacks.mozilla.org/author/phundalmozilla-com/) for the HOWTO at https://hacks.mozilla.org/2017/02/headless-raspberry-pi-configuration-over-bluetooth/
 
 [MiniPiRack.com](https://www.minipirack.com) - a scalable, desktop cluster
+
