@@ -10,7 +10,7 @@ See [network diagram.
 ](./images/MiniPiRack-NAT.png)
 ![Network Diagram](./images/MiniPiRack-NAT.png)
 
-The internal network (r1-p2, r1-p3) can be access via r1-p1 as a jump server.
+The internal network (p2-r1, p3-r1) can be access via p1-r1 as a jump server.
 
 # HOWTO Setup the Wifi and NAT
 1. Connect via wired connection so the ansible script can be run.
@@ -18,12 +18,12 @@ The internal network (r1-p2, r1-p3) can be access via r1-p1 as a jump server.
 3. Disconnect the ethernet cable while the rack reboots.  You won't need it anymore.
 4. Depending on your network setup, you might be able to connect using:
 
-       ssh pirate@r1-p1.local
-5. If r1-p1.local does not resolve to an IP address, use the Bluetooth pairing to attach to the master r1-p1 (see directions below.)
-6. Get the IP address of the r1-p1 wlan0 network adapter using 'ifconfig'
-7. ssh to r1-p1 by:
+       ssh pirate@p1-r1.local
+5. If p1-r1.local does not resolve to an IP address, use the Bluetooth pairing to attach to the master p1-r1 (see directions below.)
+6. Get the IP address of the p1-r1 wlan0 network adapter using 'ifconfig'
+7. ssh to p1-r1 by:
 
-       ssh pirate@<ip address of r1-p1 wlan0>
+       ssh pirate@<ip address of p1-r1 wlan0>
 9. Enjoy your newly Wifi-connected, NAT-ed MiniPiRack!
 
 ## To run the ansible playbook
@@ -36,16 +36,16 @@ The 'btname' variable is optional.  Without it, the btname will default to 'rpi1
 
 ## To access a terminal via BlueTooth using 'screen'
 
-The ansible script will expose the master (r1-p1) via Bluetooth so that you can connect to it via iTerm2 or other terminal program.
+The ansible script will expose the master (p1-r1) via Bluetooth so that you can connect to it via iTerm2 or other terminal program.
 
 ### HOWTO Connect via Bluetooth
-1. Using Bluetooth, pair your laptop to the MiniPiRack master (r1-p1) ([Bluetooth pairing
+1. Using Bluetooth, pair your laptop to the MiniPiRack master (p1-r1) ([Bluetooth pairing
 ](./images/BluetoothPairing.png))
-2. Connect using 'screen' to r1-p1 (See directions below.)
+2. Connect using 'screen' to p1-r1 (See directions below.)
 
 
 ### Find the Bluetooth device
-*This will not work until you have paired your laptop with r1-p1 (Step #4 in the HOWTO).*
+*This will not work until you have paired your laptop with p1-r1 (Step #4 in the HOWTO).*
 
 At a shell prompt:
 
@@ -53,17 +53,17 @@ At a shell prompt:
 
 You should see something like the following
 
-    /dev/cu.r1-p1-SerialPort
+    /dev/cu.p1-r1-SerialPort
 
-The name of the connected device is 'r1-p1'
+The name of the connected device is 'p1-r1'
 
 ### Connect via Bluetooth using 'screen'
 The command to start a tty session is:
 screen /dev/cu.<name of connected device goes here\>-SerialPort 115200
 
-For the device listed above (r1-p1):
+For the device listed above (p1-r1):
 
-    screen /dev/cu.r1-p1-SerialPort 115200
+    screen /dev/cu.p1-r1-SerialPort 115200
 
 
 
